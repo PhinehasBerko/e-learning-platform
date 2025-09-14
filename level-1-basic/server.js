@@ -1,25 +1,28 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const cors = require("cors");
-require("dotenv").config();
+import express, { json } from "express";
+import { connect, Schema, model } from "mongoose";
+import cors from "cors";
+import dotenv from "dotenv";
+
+dotenv.config();
+
 
 const app = express();
 app.use(cors());
-app.use(express.json());
+app.use(json());
 
 // MongoDB connection
-mongoose.connect(process.env.MONGO_URI_ATLAS, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log("✅ MongoDB Connected"))
+connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log("✅ MongoDB Connected successfully🎊"))
   .catch(err => console.error(err));
 
 // Schema & Models
-const courseSchema = new mongoose.Schema({
+const courseSchema = new Schema({
   title: String,
   description: String,
   teacher: String
 });
 
-const Course = mongoose.model("Course", courseSchema);
+const Course = model("Course", courseSchema);
 
 // Routes
 app.get("/", (req, res) => {
@@ -27,27 +30,47 @@ app.get("/", (req, res) => {
 });
 
 app.get("/api/courses", async (req, res) => {
-  const courses = await Course.find();
-  res.json(courses);
+  try {
+    const courses = await Course.find();
+    if (courses.length === 0) {
+      return res.status(404).json({ message: "No courses found" });
+    }else{
+      res.json(courses).status(200);
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
 });
 
 app.post("/api/courses", async (req, res) => {
-  const { title, description, teacher } = req.body;
-  const newCourse = new Course({ title, description, teacher });
-  await newCourse.save();
-  res.json(newCourse);
+  try { 
+    const { title, description, teacher } = req.body;
+    const newCourse = new Course({ title, description, teacher });
+    await newCourse.save();
+    res.json(newCourse);
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
 });
 
 app.put("/api/courses/:id", async (req, res) => {
-  const { id } = req.params;
-  const updatedCourse = await Course.findByIdAndUpdate(id, req.body, { new: true });
-  res.json(updatedCourse);
+  try {
+    const { id } = req.params;
+    const updatedCourse = await Course.findByIdAndUpdate(id, req.body, { new: true });
+    res.json(updatedCourse);
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
 });
 
 app.delete("/api/courses/:id", async (req, res) => {
-  const { id } = req.params;
-  await Course.findByIdAndDelete(id);
-  res.json({ message: "Course deleted" });
+  try {
+    const { id } = req.params;
+    await Course.findByIdAndDelete(id);
+    res.json({ message: "Course deleted" });
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
 });
 
 // Server start
