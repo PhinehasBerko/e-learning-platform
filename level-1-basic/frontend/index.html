@@ -1,23 +1,29 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 
 <head>
     <title>E-Learning Platform</title>
+    <link rel="stylesheet" href="style.css">
     
 </head>
 
 <body>
-    <h1>📘 E-Learning Platform (Level 1)</h1>
+    <h1 id="header">📘 E-Learning Platform - Base</h1>
 
-    <h2>Add Course</h2>
-    <input id="title" placeholder="Course Title">
-    <input id="description" placeholder="Description">
-    <input id="teacher" placeholder="Teacher">
-    <button onclick="addCourse()">Add Course</button>
+    <h2 >Add Course</h2>
+    <small>Use the form below to add a new course.</small>
+    <div id="add-course-form">
+        <input id="title" placeholder="Course Title">
+        <input id="description" placeholder="Description">
+        <input id="teacher" placeholder="Teacher">
+        <button onclick="addCourse()">Add Course</button>
+    </div>
 
     <h2>All Courses</h2>
+    
     <div id="courses"></div>
-
+    
+    <script src="./api.js"></script>
     <!-- <script>
         const API_URL = "http://localhost:5000/api/courses";
 
@@ -51,4 +57,4 @@
     </script> -->
 </body>
 
-</html> -->
+</html>

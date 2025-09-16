@@ -1,15 +1,59 @@
-/* body {
+body {
     font-family: Arial;
     padding: 20px;
+   
+}
+#header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #941e1e;
+    margin-bottom: 20px;
 }
 
+#add-course-form {
+    margin: 20px auto;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    gap: 20px;
+    width: 90%;
+}
 input,
 button {
-    margin: 5px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #322f2f;
+    font-size: 16px;
+
+}
+button:hover {
+    background-color: #941e1e;
+    color: white;
+    cursor: pointer;
+    border: none;    
 }
 
+#courses {
+    /* Target the container where the map() output is placed */
+    /* Centering the container itself */
+    width: 90%;
+    margin: 10px auto;
+
+    /* Grid layout for the course items */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 10px;
+    align-content: center;
+}
 .course {
-    border: 1px solid #ccc;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #322f2f;
     margin: 5px;
-    padding: 10px;
-} */
+    padding: 5px;
+    border-radius: 5px;
+    width: 300px;
+    /* color: #941e1e; */
+}
+
